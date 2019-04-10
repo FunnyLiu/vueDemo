@@ -523,10 +523,12 @@ ForkTsCheckerWebpackPlugin {
                         tslintVersion: undefined,
                           vue: true
 } ],
-entry:
-{
+entry:{
   app:
-  ['/Users/liufang/openSource/FunnyLiu/vueDemo/vueCliDemo/vueCliBase/basic/node_modules/webpack-dev-server/client/index.js?http://10.242.0.183:8080/sockjs-node',
-    '/Users/liufang/openSource/FunnyLiu/vueDemo/vueCliDemo/vueCliBase/basic/node_modules/webpack/hot/dev-server.js',
-    './src/main.ts']
-} }
+    [
+      '/Users/liufang/openSource/FunnyLiu/vueDemo/vueCliDemo/vueCliBase/basic/node_modules/webpack-dev-server/client/index.js?http://10.242.0.183:8080/sockjs-node',
+      '/Users/liufang/openSource/FunnyLiu/vueDemo/vueCliDemo/vueCliBase/basic/node_modules/webpack/hot/dev-server.js',
+      './src/main.ts'
+    ]
+  }
+}
