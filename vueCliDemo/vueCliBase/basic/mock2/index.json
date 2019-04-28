@@ -1,0 +1,9 @@
+{
+    "code":0,
+    "message":"@paragraph()",
+    "result":{
+        "name":"@cname",
+        "ip":"@ip()",
+        "userid":"@id()"
+    }
+}
