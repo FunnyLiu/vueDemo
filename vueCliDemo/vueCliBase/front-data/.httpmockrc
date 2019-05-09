@@ -1,0 +1,8 @@
+{
+    "mockFileName": "mocks",
+    "routes": {
+        "GET /api/project/":{
+            "path": "/api/getProject.json"
+        }
+    }
+}

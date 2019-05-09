@@ -1,0 +1,2 @@
+- basic - a simple project created by cli
+- front-data - A small architecture that includes routing, data, and interface management
