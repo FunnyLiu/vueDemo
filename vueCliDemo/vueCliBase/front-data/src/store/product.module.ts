@@ -1,5 +1,5 @@
 import { ProductService } from '@/apis/product'
-import { GET_PRODUCTS } from '@/store/actions.type'
+import { GET_PRODUCTS, PUT_PRODUCT_DESCRIPTION_RANDOM } from '@/store/actions.type'
 import { SET_PRODUCTS } from '@/store/mutations.type'
 import { getProductParams } from '@/declarations/product';
 
@@ -22,6 +22,12 @@ const actions = {
         commit(SET_PRODUCTS, data)
       })
       .catch((error: any) => {
+        throw new Error(error)
+      })
+  },
+  [PUT_PRODUCT_DESCRIPTION_RANDOM] ({ commit }: { commit: any}, slug:string) {
+    return ProductService.updateDescriptionRandom(slug)
+      .catch((error:any ) => {
         throw new Error(error)
       })
   }

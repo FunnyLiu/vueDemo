@@ -19,6 +19,14 @@
           prop="description"
           label="产品描述">
         </el-table-column>
+        <el-table-column
+          fixed="right"
+          label="操作"
+          width="100">
+          <template slot-scope="scope">
+            <el-button @click="edit(scope.row)" type="text" size="small">编辑</el-button>
+          </template>
+        </el-table-column>
       </el-table>
       <el-pagination
         background
@@ -33,7 +41,7 @@
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { mapGetters } from 'vuex';
-import { GET_PRODUCTS } from '../../store/actions.type';
+import { GET_PRODUCTS, PUT_PRODUCT_DESCRIPTION_RANDOM } from '../../store/actions.type';
 import { filters } from '../../declarations/product';
 
 @Component({
@@ -74,6 +82,11 @@ export default class ProjectPanel extends Vue {
     const name = this.input
     this.listConfig.filters.name = name
     this.getProducts()
+  }
+  edit(row:any) {
+    this.$store.dispatch(PUT_PRODUCT_DESCRIPTION_RANDOM,row.slug).then(data=>{
+      this.getProducts()
+    })
   }
 }
 </script>
