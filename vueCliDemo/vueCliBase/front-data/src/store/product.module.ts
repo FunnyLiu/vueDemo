@@ -4,7 +4,7 @@ import { SET_PRODUCTS } from '@/store/mutations.type'
 import { getProductParams } from '@/declarations/product';
 
 const state = {
-    products: [],
+  products: [],
   productsCount: 0
 }
 const getters = {
