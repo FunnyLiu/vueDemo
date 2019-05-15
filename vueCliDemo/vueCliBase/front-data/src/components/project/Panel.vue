@@ -1,6 +1,12 @@
 <template>
     <div style="margin-left:300px">
       <h1>概况面板，展示所有数据内容</h1>
+      <div style="width:200px;float:left">
+        <el-input v-model="input" placeholder="请输入名称"></el-input>
+      </div>
+      <div style="float:left">
+        <el-button @click="query()" type="primary">查询</el-button>
+      </div>
       <el-table
         :data="products"
         style="width: 100%">
@@ -28,6 +34,7 @@
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { mapGetters } from 'vuex';
 import { GET_PRODUCTS } from '../../store/actions.type';
+import { filters } from '../../declarations/product';
 
 @Component({
   name: 'ProjectPanel',
@@ -46,7 +53,7 @@ export default class ProjectPanel extends Vue {
   }
 
   get listConfig() {
-    const filters = {
+    const filters:filters = {
       offset: (this.currentPage -1) * this.itemsPrepage,
       limit: this.itemsPrepage
     }
@@ -55,12 +62,18 @@ export default class ProjectPanel extends Vue {
 
 
   currentPage = 1
+  input = ''
 
   mounted () {
     this.getProducts()
   }
   getProducts() {
     this.$store.dispatch(GET_PRODUCTS,this.listConfig)
+  }
+  query() {
+    const name = this.input
+    this.listConfig.filters.name = name
+    this.getProducts()
   }
 }
 </script>
