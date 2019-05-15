@@ -1,5 +1,5 @@
 import { ProductService } from '@/apis/product'
-import { GET_PRODUCTS, PUT_PRODUCT_DESCRIPTION_RANDOM } from '@/store/actions.type'
+import { GET_PRODUCTS, PUT_PRODUCT_DESCRIPTION_RANDOM, POST_PRODUCT_RANDOM, DEL_PRODUCT } from '@/store/actions.type'
 import { SET_PRODUCTS } from '@/store/mutations.type'
 import { getProductParams } from '@/declarations/product';
 
@@ -30,6 +30,18 @@ const actions = {
       .catch((error:any ) => {
         throw new Error(error)
       })
+  },
+  [POST_PRODUCT_RANDOM] ({ commit }: { commit: any}) {
+    return ProductService.postProductRandom()
+      .catch((error:any ) => {
+        throw new Error(error)
+      })
+  },
+  [DEL_PRODUCT] ({ commit }: {commit: any}, slug:string) {
+    return ProductService.delProduct(slug)
+    .catch((error:any ) => {
+      throw new Error(error)
+    })
   }
 }
 const mutations = {

@@ -1,3 +1,5 @@
 export const FETCH_PROJECTS = 'fetchProject'
 export const GET_PRODUCTS = 'getProducts'
 export const PUT_PRODUCT_DESCRIPTION_RANDOM = 'putProductDescriptionRandom'
+export const POST_PRODUCT_RANDOM = 'postProductRandom'
+export const DEL_PRODUCT = 'delProduct'

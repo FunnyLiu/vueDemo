@@ -79,7 +79,7 @@ const Api = {
   },
   async delete (resource:string) {
     try {
-      return Vue.axios.put(`${resource}`)
+      return Vue.axios.delete(`${resource}`)
     } catch (error) {
       throw new Error(`Api delete error: ${error}`)
     }

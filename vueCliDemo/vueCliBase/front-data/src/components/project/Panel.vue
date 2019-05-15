@@ -7,6 +7,9 @@
       <div style="float:left">
         <el-button @click="query()" type="primary">查询</el-button>
       </div>
+      <div style="float:left">
+        <el-button @click="add()" type="primary">新增</el-button>
+      </div>
       <el-table
         :data="products"
         style="width: 100%">
@@ -25,6 +28,7 @@
           width="100">
           <template slot-scope="scope">
             <el-button @click="edit(scope.row)" type="text" size="small">编辑</el-button>
+            <el-button @click="del(scope.row)" type="text" size="small">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -41,7 +45,7 @@
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { mapGetters } from 'vuex';
-import { GET_PRODUCTS, PUT_PRODUCT_DESCRIPTION_RANDOM } from '../../store/actions.type';
+import { GET_PRODUCTS, PUT_PRODUCT_DESCRIPTION_RANDOM, POST_PRODUCT_RANDOM, DEL_PRODUCT } from '../../store/actions.type';
 import { filters } from '../../declarations/product';
 
 @Component({
@@ -52,7 +56,7 @@ import { filters } from '../../declarations/product';
 })
 export default class ProjectPanel extends Vue {
 
-  @Prop({ default: 2 }) readonly itemsPrepage!: number
+  @Prop({ default: 5 }) readonly itemsPrepage!: number
 
   @Watch('currentPage')
   onCurrentPageChanged(newValue:number) {
@@ -85,6 +89,16 @@ export default class ProjectPanel extends Vue {
   }
   edit(row:any) {
     this.$store.dispatch(PUT_PRODUCT_DESCRIPTION_RANDOM,row.slug).then(data=>{
+      this.getProducts()
+    })
+  }
+  del(row:any) {
+    this.$store.dispatch(DEL_PRODUCT,row.slug).then(data=>{
+      this.getProducts()
+    })
+  }
+  add() {
+    this.$store.dispatch(POST_PRODUCT_RANDOM).then(data=>{
       this.getProducts()
     })
   }
