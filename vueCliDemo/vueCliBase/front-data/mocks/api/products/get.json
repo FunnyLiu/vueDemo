@@ -1,0 +1,49 @@
+{
+    "code": 0,
+    "message": "success",
+    "result": {
+      "products": [
+        {
+          "id": 7,
+          "slug": "ad217aab",
+          "name": "string",
+          "description": "about",
+          "created": "2019-05-14T11:20:10.000Z",
+          "updated": "2019-05-15T06:56:19.000Z"
+        },
+        {
+          "id": 6,
+          "slug": "e9155c62",
+          "name": "lf",
+          "description": "",
+          "created": "2019-05-13T06:41:29.000Z",
+          "updated": "2019-05-13T06:41:29.000Z"
+        },
+        {
+          "id": 5,
+          "slug": "d20d2b4d",
+          "name": "hexie",
+          "description": "",
+          "created": "2019-05-13T06:34:00.000Z",
+          "updated": "2019-05-13T06:34:00.000Z"
+        },
+        {
+          "id": 4,
+          "slug": "7bda3a65",
+          "name": "hexi",
+          "description": "",
+          "created": "2019-05-13T06:22:14.000Z",
+          "updated": "2019-05-13T06:22:14.000Z"
+        },
+        {
+          "id": 3,
+          "slug": "d47056bf",
+          "name": "xixi",
+          "description": "string",
+          "created": "2019-05-13T03:01:39.000Z",
+          "updated": "2019-05-15T06:50:21.000Z"
+        }
+      ],
+      "productsCount": 5
+    }
+  }

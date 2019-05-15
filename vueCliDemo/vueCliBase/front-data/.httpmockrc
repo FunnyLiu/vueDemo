@@ -3,6 +3,9 @@
     "routes": {
         "GET /api/project/":{
             "path": "/api/getProject.json"
+        },
+        "GET /api/products":{
+            "path": "api/products/get.json"
         }
     }
 }
