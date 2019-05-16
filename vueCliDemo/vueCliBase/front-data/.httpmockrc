@@ -5,7 +5,7 @@
             "path": "/api/getProject.json"
         },
         "GET /api/products":{
-            "path": "api/products/get.json"
+            "path": "/api/products/get.json"
         }
     }
 }
