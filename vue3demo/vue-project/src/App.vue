@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import configLoader from 'fe-config-loader'
+const test = configLoader.get('COOLING_TIME')
+console.warn(test, 'test')
 </script>
 
 <template>
