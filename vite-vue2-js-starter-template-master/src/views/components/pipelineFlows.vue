@@ -1,5 +1,6 @@
 <script>
-import { ref } from 'vue';
+import { ref, onMounted, nextTick } from 'vue';
+import Sortable from '@ccpow/devopslib/packages/utils/sortable'
 import pipelineStart from './pipelineStart.vue';
 import splitline from './splitline.vue';
 import pipelineFlow from './pipelineFlow.vue';
@@ -137,6 +138,7 @@ export default {
                 }
             ]
         })
+        const sortable = ref(undefined)
         // vue2没有proxy，这里只能有状态处理数据
         function onAction({ type, data }) {
             switch (type) {
@@ -162,6 +164,17 @@ export default {
                     break;
             }
         }
+        function initSortable() {
+            sortable.value = null;
+            sortable.value = new Sortable(document.querySelector('.pipeline-flows-core'), {
+                handle: '.j-flow-drag',
+                animation: 150
+            });
+        }
+        onMounted(async ()=> {
+            await nextTick()
+            initSortable()
+        })
         return {
             pipelineData,
             onAction

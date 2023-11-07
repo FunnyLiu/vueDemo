@@ -1,4 +1,7 @@
 <script>
+import { ref, onMounted } from 'vue';
+import { Sortable } from 'sortablejs/modular/sortable.core.esm';
+
 export default {
     name: 'PipelineFlowCard',
     props: {
@@ -7,28 +10,51 @@ export default {
             default: () => []
         }
     },
-    setup(props, { emit}) {
+    setup(props, { emit }) {
+        const cardsWrapper = ref(null);
+        const isDragging = ref(false);
+        const sortable = ref(undefined);
         function deleteJob(id) {
             emit('deleteJob', id)
         }
         function copyJob(id) {
             emit('copyJob', id)
         }
+        function initSortable() {
+            sortable.value = null;
+            sortable.value = new Sortable(cardsWrapper.value, {
+                animation: 0,
+                onStart: function (env) {
+                    isDragging.value = true
+                    console.log('onStart')
+                },
+                onEnd: function (env) {
+                    console.log('onEnd')
+                    isDragging.value = false
+                }
+            });
+        }
+        onMounted(() => {
+            initSortable()
+        })
         return {
             pipelineJobs: props.jobs,
             deleteJob,
-            copyJob
+            copyJob,
+            cardsWrapper,
+            isDragging
         }
     }
 }
 </script>
 <template>
-    <div class="pipeline-flow-cards">
-        <div class="pipeline-flow-card" :key="job.id" v-for="(job, index) in pipelineJobs">
+    <div ref="cardsWrapper" class="pipeline-flow-cards" :class="isDragging ? 'dragging' : ''">
+        <div class="pipeline-flow-card" :key="job.id" v-for="(job) in pipelineJobs">
             <div class="pipeline-flow-card-job">
-                <div :class="index == 0 ? 'first-before-line' : 'before-line'"></div>
-                <div v-if="index == 1" class="before-arc"></div>
-                <div v-if="index != 0 && index != 1" class="before-line-fill"></div>
+                <div class="first-before-line"></div>
+                <div class="before-line"></div>
+                <div class="before-arc"></div>
+                <div class="before-line-fill"></div>
                 <div class="content">
                     <div class="content-info">{{ job.title }}</div>
                     <div class="action">
@@ -36,12 +62,54 @@ export default {
                         <i class="el-icon-delete" @click="() => deleteJob(job.id)"></i>
                     </div>
                 </div>
-                <div v-if="index == 0" class="next-line"></div>
+                <div class="next-line"></div>
             </div>
         </div>
     </div>
 </template>
 <style lang="less" scoped>
+.pipeline-flow-cards {
+    // .sortable-ghost.pipeline-flow-card{
+    //     background: red;
+    //     .before-line {
+    //         display: block !important;
+    //     }
+    // }
+    .pipeline-flow-card:nth-child(1){
+        .first-before-line {
+            display: block;
+        }
+
+        .next-line {
+            display: block;
+        }
+    }
+
+    .pipeline-flow-card:nth-child(2) {
+        .before-arc {
+            display: block;
+        }
+    }
+
+    .pipeline-flow-card:not(:nth-child(1)):not(:nth-child(2)) {
+        .before-line-fill {
+            display: block;
+        }
+    }
+
+    .pipeline-flow-card:not(:nth-child(1)) {
+        .before-line {
+            display: block;
+        }
+    }
+
+    .sortable-drag.pipeline-flow-card {
+        .before-line,.first-before-line,.next-line,.before-arc,.before-line-fill {
+            opacity: 0;
+        }
+    }
+}
+
 .pipeline-flow-card {
     display: flex;
     padding: 20px 0;
@@ -67,6 +135,7 @@ export default {
         &:hover {
             border: 1px solid var(--devui-link-light, #96adfa);
             box-shadow: var(--devui-shadow-length-hover, 0 8px 16px 0) var(--devui-connected-overlay-shadow, rgba(37, 43, 58, .16));
+
             .content .action {
                 display: block;
             }
@@ -74,6 +143,7 @@ export default {
 
 
         .next-line {
+            display: none;
             border-bottom: 2px solid var(--devui-link-light, #96adfa);
             width: 40px;
             position: absolute;
@@ -82,6 +152,7 @@ export default {
         }
 
         .before-arc {
+            display: none;
             position: absolute;
             border-top: 2px solid var(--devui-link-light, #96adfa);
             border-right: 2px solid var(--devui-link-light, #96adfa);
@@ -93,6 +164,7 @@ export default {
         }
 
         .before-line {
+            display: none;
             border-left: 2px solid var(--devui-link-light, #96adfa);
             border-bottom: 2px solid var(--devui-link-light, #96adfa);
             border-radius: 0 0 0 12px;
@@ -104,6 +176,7 @@ export default {
         }
 
         .before-line-fill {
+            display: none;
             position: absolute;
             height: 30px;
             top: -70px;
@@ -112,6 +185,7 @@ export default {
         }
 
         .first-before-line {
+            display: none;
             border-bottom: 2px solid var(--devui-link-light, #96adfa);
             width: 50px;
             position: absolute;
@@ -142,10 +216,12 @@ export default {
 
             .action {
                 display: none;
+
                 i {
                     margin-left: 16px;
                 }
             }
         }
     }
-}</style>
+}
+</style>

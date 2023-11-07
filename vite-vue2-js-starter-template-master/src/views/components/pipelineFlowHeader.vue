@@ -39,7 +39,7 @@ export default {
                 <div class="content">{{ content }}</div>
             </div>
             <div class="pipeline-flow-header-commands">
-                <i class="el-icon-edit"></i>
+                <i class="el-icon-rank j-flow-drag"></i>
                 <i class="el-icon-document-copy" @click="copyFlow"></i>
                 <i class="el-icon-delete" @click="deleteFlow"></i>
             </div>
