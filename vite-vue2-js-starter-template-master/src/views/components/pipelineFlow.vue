@@ -69,6 +69,15 @@ export default {
                 }
             })  
         }
+        function dragJobEnd(evt) {
+            emit('onAction', {
+                type: 'dragJobEnd',
+                data: {
+                    id: props.flow.id,
+                    evt
+                }
+            })
+        }
         return {
             title,
             content,
@@ -77,7 +86,8 @@ export default {
             deleteJob,
             copyJob,
             deleteFlow,
-            copyFlow
+            copyFlow,
+            dragJobEnd
         }
     }
 }
@@ -85,7 +95,7 @@ export default {
 <template>
     <div class="pipeline-flow">
         <pipelineFlowHeader :title="title" :content="content" @deleteFlow="deleteFlow" @copyFlow="copyFlow" />
-        <pipelineFlowCard :jobs="jobs" @deleteJob="deleteJob" @copyJob="copyJob" />
+        <pipelineFlowCard :jobs="jobs" @deleteJob="deleteJob" @copyJob="copyJob" @dragEnd="dragJobEnd" />
         <pipelineJobAdd :jobs="jobs" @addJob="addJob" />
     </div>
 </template>

@@ -11,7 +11,7 @@ export default {
 </script>
 <template>
     <div class="pipeline-start">
-        <pipelineFlowHeader title="流水线源" content='1个代码源' />
+        <pipelineFlowHeader :action="false" title="流水线源" content='1个代码源' />
         <pipelineStartCard />
     </div>
 </template>

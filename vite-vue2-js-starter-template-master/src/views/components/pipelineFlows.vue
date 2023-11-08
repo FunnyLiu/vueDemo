@@ -64,12 +64,33 @@ function deleteFlow(pipelineData, data = {}) {
 // 复制阶段
 function copyFlow(pipelineData, data = {}) {
     const { id } = data;
+    const copyFlow = pipelineData.flows.find(flow => flow.id == id)
     const newFlow = {
         id: +new Date(),
         title: `阶段${+new Date() % 10000}`,
-        jobs: []
+        // todo 此处未来需要考虑job的id也要单独定制
+        jobs: [...copyFlow.jobs]
     }
     pipelineData.flows.splice(pipelineData.flows.findIndex(item => item.id == id) + 1, 0 ,newFlow);
+}
+// 任务纵向拖动完成
+function dragJobEnd(pipelineData, data = {}) {
+    // id为flow的id
+    const { id, evt } = data
+    pipelineData.flows.forEach(flow => {
+        if(flow.id == id) {
+            const movedItem = flow.jobs[evt.oldIndex]
+            flow.jobs.splice(evt.oldIndex, 1);
+            flow.jobs.splice(evt.newIndex, 0, movedItem);
+        }
+    })
+}
+// 阶段横向拖动完成
+function dragFlowEnd(pipelineData, data = {}){
+    const { evt } = data
+    const movedItem = pipelineData.flows[evt.oldIndex]
+    pipelineData.flows.splice(evt.oldIndex, 1);
+    pipelineData.flows.splice(evt.newIndex, 0, movedItem);
 }
 export default {
     name: 'PipelineFlows',
@@ -112,23 +133,23 @@ export default {
                         },
                         {
                             id: 6,
-                            title: '发布到一个很长的'
+                            title: '发布到一长的2'
                         },
                         {
                             id: 7,
-                            title: '发布到一个很长的'
+                            title: '发布到一长的3'
                         },
                         {
                             id: 8,
-                            title: '发布到一个很长的'
+                            title: '发布到一长的4'
                         },
                         {
                             id: 9,
-                            title: '发布到一个很长的'
+                            title: '发布到一长的5'
                         },
                         {
                             id: 10,
-                            title: '发布到一个很长的'
+                            title: '发布到一个很长的6'
                         }
                     ]
                 },{
@@ -160,6 +181,12 @@ export default {
                 case 'copyFlow':
                     copyFlow(pipelineData.value, data)
                     break
+                case 'dragJobEnd':
+                    dragJobEnd(pipelineData.value, data)
+                    break
+                case 'dragFlowEnd':
+                    dragFlowEnd(pipelineData.value, data)
+                    break
                 default:
                     break;
             }
@@ -168,7 +195,17 @@ export default {
             sortable.value = null;
             sortable.value = new Sortable(document.querySelector('.pipeline-flows-core'), {
                 handle: '.j-flow-drag',
-                animation: 150
+                animation: 0,
+                delay: 100,
+                onEnd: function(evt) {
+                    onAction({
+                        type: 'dragFlowEnd',
+                        data: {
+                            evt
+                        }
+                    })
+                }
+
             });
         }
         onMounted(async ()=> {

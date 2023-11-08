@@ -10,6 +10,10 @@ export default {
         content: {
             type: String,
             default: ''
+        },
+        action: {
+            type: Boolean,
+            default: true
         }
     },
     setup(props, { emit }) {
@@ -25,7 +29,8 @@ export default {
             title,
             content,
             deleteFlow,
-            copyFlow
+            copyFlow,
+            action: props.action
         }
     }
 }
@@ -38,7 +43,7 @@ export default {
                 <div class="title">{{ title }}</div>
                 <div class="content">{{ content }}</div>
             </div>
-            <div class="pipeline-flow-header-commands">
+            <div class="pipeline-flow-header-commands" v-if="action">
                 <i class="el-icon-rank j-flow-drag"></i>
                 <i class="el-icon-document-copy" @click="copyFlow"></i>
                 <i class="el-icon-delete" @click="deleteFlow"></i>

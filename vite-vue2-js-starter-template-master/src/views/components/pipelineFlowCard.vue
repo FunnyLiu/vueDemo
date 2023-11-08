@@ -28,9 +28,10 @@ export default {
                     isDragging.value = true
                     console.log('onStart')
                 },
-                onEnd: function (env) {
+                onEnd: function (evt) {
                     console.log('onEnd')
                     isDragging.value = false
+                    emit('dragEnd', evt)
                 }
             });
         }
