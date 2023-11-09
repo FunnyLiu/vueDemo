@@ -9,4 +9,9 @@ export default [
     name: 'about',
     component: () => import('@/views/AboutView.vue'),
   },
+  {
+    path: '/form',
+    name: 'form',
+    component: () => import('@/views/FormView.vue'),
+  },
 ];
